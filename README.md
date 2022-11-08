@@ -63,4 +63,3 @@ $ npm run test:cov
 
 Nest is [MIT licensed](LICENSE).
 # nest-rabbitmq-aws-foundations
-# nest-rabbitmq-aws-foundations
