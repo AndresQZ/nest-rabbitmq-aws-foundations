@@ -1,9 +1,11 @@
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { Module } from '@nestjs/common';
-import { MessagingService } from 'src/services/messaging.service';
+import { ConsumerService } from 'src/services/consumer..service';
+import { UtilsModule } from './UtilsModule';
 
 @Module({
   imports: [
+    UtilsModule,
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {
@@ -12,10 +14,10 @@ import { MessagingService } from 'src/services/messaging.service';
         },
       ],
       uri: 'amqp://guest:guest@localhost:5672',
-      connectionInitOptions: { wait: false },
+      connectionInitOptions: { wait: false, reject: false },
     }),
   ],
-  providers: [MessagingService],
-  exports: [MessagingService]
+  providers: [ConsumerService],
+  exports: [ConsumerService]
 })
 export class RabbitModule {}
