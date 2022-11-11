@@ -3,15 +3,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RabbitModule } from './modules/rabbitMQ.module';
 
-import { AwsSdkModule } from 'nest-aws-sdk';
-import { SharedIniFileCredentials } from 'aws-sdk';
-import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
 import { AwsSdkInitModule } from './modules/AwsSdkInitModule';
 import { UtilsModule } from './modules/UtilsModule';
 
+
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
+
+import { ConfigInitModule } from './modules/ConfigInit.module';
+
+
+
 @Module({
-  imports: [RabbitModule, AwsSdkInitModule, UtilsModule],
+  imports: [ConfigInitModule, RabbitModule, AwsSdkInitModule, UtilsModule, ConfigModule.forRoot({isGlobal: false, load: [configuration]})],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule {}
