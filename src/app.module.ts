@@ -15,7 +15,7 @@ import { ConfigInitModule } from './modules/ConfigInit.module';
 
 
 @Module({
-  imports: [ConfigInitModule, RabbitModule, AwsSdkInitModule, UtilsModule, ConfigModule.forRoot({isGlobal: false, load: [configuration]})],
+  imports: [ConfigModule.forRoot({isGlobal: false, load: [configuration]}),ConfigInitModule, RabbitModule, AwsSdkInitModule, UtilsModule ],
   controllers: [AppController],
   providers: [AppService]
 })
