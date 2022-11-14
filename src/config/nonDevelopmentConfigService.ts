@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { RABBIMQ_CONNECTION_KEY } from "src/constans/constants";
 import { AppConfigService } from "src/interfaces/AppConfigService";
 
 @Injectable()
@@ -14,7 +15,7 @@ export class NonDevelopmentConfigService implements AppConfigService {
         'QUEUE_NAME': process.env.QUEUE_NAME,
         'EXCHANGE_NAME' : process.env.EXCHANGE_NAME,
         'EXCHANGE_TYPE': process.env.EXCHANGE_TYPE,
-        'rabbitMQ.connection': process.env.RABBIMQ_CONNECTION
+        [RABBIMQ_CONNECTION_KEY]: process.env.RABBIMQ_CONNECTION
     };
 
     static RABBIT_MQ_CONNEXION  = process.env.RABBIMQ_CONNECTION;

@@ -5,7 +5,7 @@ import { UtilsModule } from './UtilsModule';
 
 import {ConfigService, ConfigModule} from '@nestjs/config';
 
-import { EXCHANGE_NAME , EXCHANGE_TYPE, RABBIMQ_CONNECTION} from '../constans/constants';
+import { EXCHANGE_NAME , EXCHANGE_TYPE, RABBIMQ_CONNECTION, RABBIMQ_CONNECTION_KEY} from '../constans/constants';
 
 import { AppConfigService, CONFIG_SERVICE_TOKEN } from 'src/interfaces/AppConfigService';
 import { ConfigInitModule } from './ConfigInit.module';
@@ -16,18 +16,18 @@ import { ConfigInitModule } from './ConfigInit.module';
     UtilsModule,
     ConfigInitModule,
     RabbitMQModule.forRootAsync(RabbitMQModule, {
-      imports: [ConfigModule, ConfigInitModule],
-      useFactory: async (configService: ConfigService, appConfigService : AppConfigService ) => ({
+      imports: [ConfigInitModule],
+      useFactory: async (appConfigService : AppConfigService ) => ({
         exchanges: [
           {
             name : appConfigService.get(EXCHANGE_NAME),
             type: appConfigService.get(EXCHANGE_TYPE)
           },
         ],
-        uri: configService.get<string>('rabbitMQ.connection'),
+        uri: appConfigService.get(RABBIMQ_CONNECTION_KEY),
         connectionInitOptions: { wait: false, reject: false }
       }),
-      inject: [ConfigService, CONFIG_SERVICE_TOKEN]
+      inject: [CONFIG_SERVICE_TOKEN]
     }),
     // RabbitMQModule.forRoot(RabbitMQModule, {
     //   exchanges: [
