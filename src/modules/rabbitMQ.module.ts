@@ -1,5 +1,5 @@
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConsumerService } from 'src/services/consumer.service';
 import { UtilsModule } from './UtilsModule';
 
@@ -9,8 +9,11 @@ import { EXCHANGE_NAME , EXCHANGE_TYPE, RABBIMQ_CONNECTION, RABBIMQ_CONNECTION_K
 
 import { AppConfigService, CONFIG_SERVICE_TOKEN } from 'src/interfaces/AppConfigService';
 import { ConfigInitModule } from './ConfigInit.module';
+import { RabbitService } from 'src/services/RabbitService';
+import { ConsumerRPCService } from 'src/services/consumer-rpc.service';
 
 
+@Global()
 @Module({
   imports: [
     UtilsModule,
@@ -40,7 +43,7 @@ import { ConfigInitModule } from './ConfigInit.module';
     //   connectionInitOptions: { wait: false, reject: false },
     // }),
   ],
-  providers: [ConsumerService],
-  exports: [ConsumerService]
+  providers: [ConsumerService, RabbitService, ConsumerRPCService],
+  exports: [ConsumerService,RabbitMQModule ]
 })
 export class RabbitModule {}

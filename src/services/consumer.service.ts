@@ -26,6 +26,7 @@ export class ConsumerService {
         }
 })
 
+
   public async consumerHandler(msg: Object) {
     console.log(`Received message: ${JSON.stringify(msg)}`);
     this.utilService.processData(JSON.stringify(msg));
